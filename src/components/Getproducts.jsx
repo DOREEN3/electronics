@@ -2,9 +2,12 @@ import React, { useState ,useEffect} from 'react'
 import axios from 'axios'
 import Updateproducts from "./Updateproducts"; // import the new file
 import Deleteproducts from './Deleteproducts';
+import { useNavigate } from 'react-router-dom';
 
 
 const Getproducts = () => {
+
+  const navigate= useNavigate()
    // define 3 state to get product 
   const[products,setProducts]=useState([])
   const[loading,setLoading]=useState("")
@@ -23,7 +26,7 @@ const Getproducts = () => {
 
     // get products 
     try {
-      const response=await axios.get("https://doreen98.pythonanywhere.com/api/get_product")
+      const response=await axios.get("https://doreen98.pythonanywhere.com/api/get_product2")
       setProducts(response.data)
       setLoading("")
       
@@ -84,10 +87,14 @@ const Getproducts = () => {
               <div className="card-body">
                 <h5 className="card-title">{product.product_name}</h5>
                 <p className="card-text">{product.product_description}</p>
+                <h5>{product.product_category}</h5>
+                <h3>{product.product_cost}</h3>
 
             </div>
              <div className="card-footer">
-               <button>Purchase Now</button>
+               <button 
+               onClick={()=>navigate("/mpesapayment",{state: {product}})}
+               className='btn btn-dark w-100 mt-2'>Purchase Now</button>
                 <button
                   className="btn btn-warning"
                   onClick={() => setSelectedProduct(product)}

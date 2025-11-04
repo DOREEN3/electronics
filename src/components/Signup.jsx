@@ -35,7 +35,7 @@ const Signup = () => {
 
         // post data
         try {
-            const response=await axios.post("https://doreen98.pythonanywhere.com/api/signup",envelopeData)
+            const response=await axios.post("https://doreen98.pythonanywhere.com/api/signup2",envelopeData)
             setSuccess(response.data.message)
             // reset 
             setLoading("")
