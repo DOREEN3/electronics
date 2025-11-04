@@ -39,3 +39,21 @@ label{
   font-size: large;
   font-weight: bold;
 }
+/* Make carousel indicators circular */
+.carousel-indicators [data-bs-target] {
+  width: 15px;               /* size of circle */
+  height: 15px;
+  border-radius: 50%;        /* makes them circular */
+  background-color: gray;    /* default (inactive) color */
+  border: none;              /* remove default border */
+  opacity: 0.5;              /* slightly transparent */
+  transition: all 0.3s ease; /* smooth animation */
+}
+
+/* Active indicator (the one showing the current slide) */
+.carousel-indicators .active {
+  background-color: red;     /* red when active */
+  opacity: 1;
+  transform: scale(1.2);     /* slightly larger when active */
+}
+

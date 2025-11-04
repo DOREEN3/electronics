@@ -49,10 +49,14 @@ const Getproducts = () => {
 
   const imagepath = 'https://doreen98.pythonanywhere.com/static/images/';
   return (
-    <div className="container-fluid">
+    <div className="container-fluid bg-black ">
       <h2 className="text-primary text-center p-2">Available Products</h2>
       <h3 className="text-warning">{loading}</h3>
       <h3 className="text-danger">{error}</h3>
+      <div>
+        <input type="text" placeholder='Iam looking for...' />
+        <button type='button'></button>
+      </div>
 
        {/* Update Form (shown only if a product is selected) */}
       {selectedProduct && (
@@ -62,6 +66,41 @@ const Getproducts = () => {
           onUpdated={getProducts}
         />
       )}
+
+      {/* carousel  */}
+      
+          <div id="carouselExampleIndicators" 
+              className="carousel slide" 
+              data-bs-ride="carousel" 
+              data-bs-interval="3000">
+
+        <div className="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+        </div>
+
+        <div className="carousel-inner">
+          <div className="carousel-item active">
+            <img src="assets/electronic3.jpeg" className="d-block w-100" alt="electronics" />
+          </div>
+          <div className="carousel-item">
+            <img src="assets/kitchen.jpeg" className="d-block w-100" alt="kitchen" />
+          </div>
+          <div className="carousel-item">
+            <img src="assets/television.jpeg" className="d-block w-100" alt="television" />
+          </div>
+        </div>
+
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Next</span>
+        </button>
+      </div>
 
       {/* --- Delete Product Modal --- */}
       {deleteProduct && (
