@@ -56,4 +56,21 @@ label{
   opacity: 1;
   transform: scale(1.2);     /* slightly larger when active */
 }
-
+.items {
+  position: absolute; /* needed to float over carousel */
+  top: 20%;
+  right: 5%;
+  width: 50%;
+  max-height: 60%;
+  overflow-y: auto;
+  background-color: rgba(33, 37, 41, 0.95);
+  z-index: 1000;
+  border-radius: 15px;
+  padding: 20px;
+}
+.product-container{
+  margin: 30px auto;
+  max-width: 95%;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+  transform: translateZ(0);
+}
