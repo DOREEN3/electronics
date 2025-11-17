@@ -1,9 +1,16 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import { useCart } from "./useCart";  
+
 
 const Mpesapayment = () => {
   const {product}=useLocation().state || {}
+  const navigate=useNavigate()
+  const { cart, addToCart } = useCart();
+  const [showToast,setShowToast]=useState(false)
+
   // define state for mpesa payment 
   const[phone,setPhone]=useState("")
   const[amount,setAmount]=useState("")
@@ -42,6 +49,12 @@ const Mpesapayment = () => {
   const imagepath = 'https://doreen98.pythonanywhere.com/static/images/';
   return (
     <div className='row justify-content-center mt-4'>
+      {showToast && (
+          <div className="alert alert-success text-center">
+            Product added to cart!
+          </div>
+        )}
+
       <div className="col-md-6 rounded shadow card p-4">
         <h1 className="text-info text-center">Lipa na Mpesa</h1>
         <h3 className="text-success">{success}</h3>
@@ -64,6 +77,25 @@ const Mpesapayment = () => {
                   <input type="tel" placeholder='Enter phone 254xxxxx' className='form-control fs-5' onChange={(e)=>setPhone(e.target.value)} /> <br />
                   <input type="number"  className='form-control fs-5' value={product.product_cost} disabled/>
               <button className='btn btn-dark w-100 mt-2'>Purchase now</button>
+              <button
+                  type="button"
+                  className="btn btn-warning w-100 mt-2"
+                  onClick={() => {
+                    console.log("Adding product to cart:", product);
+                    addToCart(product);
+                    // show toast first
+                    setShowToast(true);
+                    // hide toast after 2 seconds, then navigate
+                    setTimeout(() => {
+                      setShowToast(false);
+                      navigate("/cart"); // navigate after toast
+                    }, 2000);
+                  }}
+                >
+                  Add to Cart
+                </button>
+
+
               </form>
 
             </div>

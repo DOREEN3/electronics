@@ -6,6 +6,7 @@ import Signup from './components/Signup';
 import Mpesapayment from './components/Mpesapayment';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CartPage from './components/Cartpage';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/mpesapayment" element={<Mpesapayment />} />
+        <Route path="/cart" element={<CartPage />} />
 
 
       </Routes>
