@@ -7,27 +7,29 @@ import Mpesapayment from './components/Mpesapayment';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CartPage from './components/Cartpage';
-
-
+import { CartProvider } from './components/Cartcontext';
 function App() {
   return (
-    <BrowserRouter>
-      {/* Navigation */}
-     <Navbar/>
+    <CartProvider>
+      <BrowserRouter>
+        <div className="d-flex flex-column min-vh-100">
+          <Navbar />
 
-      {/* Routes */}
-      <Routes>
-        <Route path="/" element={<Getproducts />} />
-        <Route path="/addautomotive" element={<Addproducts />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup/>} />
-        <Route path="/mpesapayment" element={<Mpesapayment />} />
-        <Route path="/cart" element={<CartPage />} />
+          <main className="flex-grow-1">
+            <Routes>
+              <Route path="/index.html" element={<Getproducts />} />
+              <Route path="/addelectronics" element={<Addproducts />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/mpesapayment" element={<Mpesapayment />} />
+              <Route path="/cart" element={<CartPage />} />
+            </Routes>
+          </main>
 
-
-      </Routes>
-      <Footer/>
-    </BrowserRouter>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </CartProvider>
   );
 }
 

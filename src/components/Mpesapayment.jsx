@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
-import { useCart } from "./useCart";  
+import { useCart } from './Cartcontext';
 
 
 const Mpesapayment = () => {
@@ -48,7 +48,7 @@ const Mpesapayment = () => {
   }
   const imagepath = 'https://doreen98.pythonanywhere.com/static/images/';
   return (
-    <div className='row justify-content-center mt-4'>
+    <div className='row justify-content-center mt-4 mb-5'>
       {showToast && (
           <div className="alert alert-success text-center">
             Product added to cart!

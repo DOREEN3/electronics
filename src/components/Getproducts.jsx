@@ -5,6 +5,8 @@ import Deleteproducts from "./Deleteproducts";
 import { useNavigate } from "react-router-dom";
 
 
+
+
 const Getproducts = () => {
   const navigate = useNavigate();
 
@@ -13,10 +15,7 @@ const Getproducts = () => {
   const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
 
-  //cart 
-  const [cart,setCart]=useState([])
-  // Cart dropdown state
-const [showCartDropdown, setShowCartDropdown] = useState(false);
+
 
 
   // Modals
@@ -31,6 +30,14 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState(null);
  //hot category
  const [hotCategory, setHotCategory] = useState(null);
+
+ // Pagination state
+const [visible, setVisible] = useState(6); // initial number of products to show
+
+// states for price sorting
+const [sortDirection,setSortDirection]=useState("asc")
+const [sortByField,setSortByField]=useState("product_cost")
+
 
   // Fetch products
   const getProducts = async () => {
@@ -50,6 +57,9 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
   useEffect(() => {
     getProducts();
   }, []);
+  useEffect(() => {
+  console.log("API DATA:", products);
+}, [products]);
 
   // Filtered list (used when NOT hovering)
   const filteredProducts = products.filter((product) =>
@@ -64,6 +74,18 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
     ? products.filter((p) => p.product_category === hoveredCategory)
     : filteredProducts;
 
+    const sortedProducts = [...categoryProducts].sort((a, b) => {
+      if (!sortDirection || !sortByField) return 0; // no sorting
+    
+      if (sortDirection === "asc") {
+        return a[sortByField] - b[sortByField];
+      } else if (sortDirection === "desc") {
+        return b[sortByField] - a[sortByField];
+      }
+      return 0;
+    });
+    
+
   return (
     <div className="container-fluid text-white">
       <div className="bg-white">
@@ -71,59 +93,59 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
         <h3 className="text-warning">{loading}</h3>
         <h3 className="text-danger">{error}</h3>
 
-        <div className="d-flex align-items-center mb-5" style={{ marginLeft: "250px", width: "70%" }}>
-  {/* Search Input */}
-  <div className="input-group flex-grow-1">
-    <input
-      type="text"
-      className="form-control"
-      placeholder="I'm looking for..."
-      value={searchTerm}
-      onChange={(e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
-        setShowModal(value.trim().length > 0);
-      }}
-    />
-    <button
-      className="btn btn-success"
-      type="button"
-      onClick={() => searchTerm.trim() !== "" && setShowModal(true)}
-    >
-      <i className="bi bi-search"></i>
-    </button>
-  </div>
+     
+            {/* Search & Sort */}
+            <div className="row g-3 justify-content-center mb-5 " style={{ marginLeft: "50px", width: "100%" }}>
+            {/* Search Input */}
+            <div className="col-md-6">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="I'm looking for..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSearchTerm(value);
+                    setShowModal(value.trim().length > 0);
+                  }}
+                />
+                <button
+                  className="btn btn-success"
+                  type="button"
+                  onClick={() => searchTerm.trim() !== "" && setShowModal(true)}
+                >
+                  <i className="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
 
-  {/* Cart beside search */}
-  <div className="position-relative ms-3">
-  <div
-    className="bg-warning text-dark rounded p-3 shadow-sm d-flex align-items-center cursor-pointer"
-    onClick={() => setShowCartDropdown(!showCartDropdown)}
-  >
-    🛒 {cart.length}
-  </div>
+            {/* Sort Select */}
+            <div className="col-md-3">
+              <select
+                className="form-select"
+                value={sortDirection}
+                onChange={(e) => {
+                  setSortByField("product_cost");
+                  setSortDirection(e.target.value);
+                  setVisible(9);
+                }}
+              >
+                <option value="">Price</option>
+                <option value="desc">Highest Price</option>
+                <option value="asc">Lowest Price</option>
+              </select>
+            </div>
+       
+                {/* Delete Modal */}
+            {deleteProduct && (
+              <Deleteproducts
+                product={deleteProduct}
+                onClose={() => setDeleteProduct(null)}
+                onDelete={getProducts}
+              />
+            )}
 
-  {showCartDropdown && (
-    <div className="position-absolute bg-white border shadow p-3 mt-2 rounded" style={{ width: "300px", right: 0, zIndex: 1000 }}>
-      {cart.length === 0 ? (
-        <p className="text-center">Cart is empty</p>
-      ) : (
-        cart.map((item) => (
-          <div key={item.id} className="d-flex justify-content-between mb-2">
-            <span>{item.product_name} x {item.quantity}</span>
-            <span>KSH {item.product_cost * item.quantity}</span>
-          </div>
-        ))
-      )}
-      <button
-        className="btn btn-success w-100 mt-2"
-        onClick={() => navigate("/cart")}
-      >
-        Go to Cart
-      </button>
-    </div>
-  )}
-</div>
 
 
         {/* Update Modal */}
@@ -148,6 +170,7 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
               style={{ top: "90px" }}
             >
               <h4 className="text-center text-info p-3 bg-danger">Categories</h4>
+              
               <ul className="list-group">
                 {categories.map((cat, idx) => (
                   <li
@@ -276,14 +299,7 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
               </div>
             )}
 
-            {/* Delete Modal */}
-            {deleteProduct && (
-              <Deleteproducts
-                product={deleteProduct}
-                onClose={() => setDeleteProduct(null)}
-                onDelete={getProducts}
-              />
-            )}
+            
           </div>
 
           {/* === HOT CATEGORIES CARD === */}
@@ -396,8 +412,8 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
               }}
             >
               <div className="row g-4 m-2">
-                {categoryProducts.length > 0 ? (
-                  categoryProducts.map((product) => (
+                {sortedProducts.length > 0 ? (
+                  sortedProducts.slice(0, visible).map((product) => (
                     <div
                       key={product.id}
                       className="col-md-4 d-flex align-items-stretch justify-content-center mb-4"
@@ -439,14 +455,19 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
 
                           <button
                             className="btn btn-warning w-100 mt-2"
-                            onClick={() => setSelectedProduct(product)}
+                            onClick={() => {setSelectedProduct(product);
+                              window.scrollTo({ top: 0, behavior: "smooth" }); // scrolls to top smoothly
+                            }}
+                            
                           >
                             Edit Product
                           </button>
 
                           <button
                             className="btn btn-danger w-100 mt-2"
-                            onClick={() => setDeleteProduct(product)}
+                            onClick={() => {setDeleteProduct(product);
+                              window.scrollTo({ top: 0, behavior: "smooth" }); // scrolls to top smoothly
+                            }}
                           >
                             Delete
                           </button>
@@ -464,6 +485,18 @@ const [showCartDropdown, setShowCartDropdown] = useState(false);
           )}
         </div>
       </div>
+    {visible < categoryProducts.length && (
+  <div className="text-center mt-4">
+    <button
+      className="btn btn-primary mb-4 "
+      style={{width:"250px"}}
+      onClick={() => setVisible((prev) => prev + 4)} // show 4 more products
+    >
+      Show More
+    </button>
+  </div>
+)}
+
     </div>
     </div>
   );
