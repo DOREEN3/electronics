@@ -30,13 +30,14 @@ const ProductCard = ({
                 >
                   <div className="card shadow-sm w-100" style={{ minHeight: "100%" }}>
                     
-                    {/* FIXED Image Height */}
+                    <div className="product-img-wrapper">
                     <img
                       src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
                       alt={product.product_name}
-                      className="card-img-top productimage"
+                      className=" productimage"
                     
                     />
+                      </div>
 
                     <div className="card-body">
                       <h5 className="card-title fw-bold fs-5">
