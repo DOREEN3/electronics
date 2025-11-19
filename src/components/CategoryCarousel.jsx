@@ -1,11 +1,11 @@
 import React from "react";
 
-const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categories,showCategories }) => {
+const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categories }) => {
   return (
     <div className="bg-dark">
       <div className="row align-items-start g-0">
         {/* Sidebar */}
-        {showCategories && (
+       
         <div className="col-md-3" style={{ marginTop: "-30px" }}>
           <div
             className="bg-dark p-3 rounded shadow-sm position-sticky"
@@ -29,7 +29,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
             </ul>
           </div>
         </div>
-      )}
+
 
         {/* Carousel & Hover Overlay */}
         <div className="col-md-9 position-relative">
