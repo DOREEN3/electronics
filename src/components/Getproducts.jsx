@@ -19,6 +19,10 @@ const Getproducts = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [deleteProduct, setDeleteProduct] = useState(null);
 
+  //hides categories and hotcategories
+  const [showCategories, setShowCategories] = useState(true);
+
+
   // Search state
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -81,6 +85,15 @@ const Getproducts = () => {
       : b[sortByField] - a[sortByField]
   );
 }, [categoryProducts, sortDirection, sortByField]);
+
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowCategories(false);
+  }, 5000); // 5 seconds
+
+  return () => clearTimeout(timer);
+}, []);
+
   
   return (
     <div className="container-fluid text-white">
@@ -156,7 +169,7 @@ const Getproducts = () => {
       <div className="bg-dark position-relative">
         
           {/* Sidebar */}
-         
+      
             <CategoryCarousel
               hoveredCategory={hoveredCategory}
               products={products}
@@ -167,6 +180,7 @@ const Getproducts = () => {
         <div className="row">
           {/* Hot Categories */}
           <div className="col-md-12">
+          {showCategories && (
             <Hotcategory
               hotCategory={hotCategory}
               products={products}
@@ -178,6 +192,7 @@ const Getproducts = () => {
               setSelectedProduct={setSelectedProduct}
               setDeleteProduct={setDeleteProduct}
             />
+      )}
 
             {/* Product Grid */}
             <ProductCard
@@ -199,4 +214,5 @@ const Getproducts = () => {
 };
 
 export default Getproducts;
+
 
