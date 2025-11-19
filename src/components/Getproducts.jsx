@@ -200,8 +200,8 @@ const Getproducts = () => {
       )}
 
       {/* Main Section */}
-     <div className="bg-dark position-relative">
-
+     <div className="container-fluid bg-dark position-relative">
+<div className="row">
   {/*category side bar and carousel */}
   <CategoryCarousel
     hoveredCategory={hoveredCategory}
@@ -210,7 +210,7 @@ const Getproducts = () => {
     categories={categories}
    
   />
-
+</div>
   {/*  hotcategory + productslist */}
   <div className="row">
     <div className="col-md-12">
@@ -251,6 +251,7 @@ const Getproducts = () => {
 };
 
 export default Getproducts;
+
 
 
 
