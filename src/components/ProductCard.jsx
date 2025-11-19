@@ -34,13 +34,8 @@ const ProductCard = ({
                     <img
                       src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
                       alt={product.product_name}
-                      className="card-img-top"
-                      style={{
-                        height: "150px",
-                        objectFit: "cover",
-                        width: "100%",
-                        backgroundColor: "#f8f8f8"
-                      }}
+                      className="card-img-top productimage"
+                    
                     />
 
                     <div className="card-body">
