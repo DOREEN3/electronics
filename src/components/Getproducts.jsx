@@ -87,6 +87,16 @@ const Getproducts = () => {
 }, [categoryProducts, sortDirection, sortByField]);
 
   useEffect(() => {
+  if (searchTerm.trim() === "") {
+    // reset sort to default
+    setSortDirection(""); 
+    setSortByField("product_cost"); 
+    setVisible(6)
+  }
+}, [searchTerm]);
+
+
+  useEffect(() => {
   const timer = setTimeout(() => {
     setShowCategories(false);
   }, 5000); // 5 seconds
@@ -105,49 +115,84 @@ const Getproducts = () => {
       </div>
 
       {/* Search & Sort */}
-      <div
-        className="row g-3 justify-content-center mb-5"
-        style={{  width: "90%" }}
+     <div className="row g-3 justify-content-center mb-5" style={{ width: "90%" }}>
+  <div className="col-md-6 position-relative">
+    <div className="input-group">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="I'm looking for..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button
+        className="btn btn-success"
+        type="button"
+        onClick={() => searchTerm.trim() !== "" && setShowModal(true)}
       >
-        <div className="col-md-6">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="I'm looking for..."
-              value={searchTerm}
-              onChange={(e) => {
-                const value = e.target.value;
-                setSearchTerm(value);
-                setShowModal(value.trim().length > 0);
-              }}
-            />
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={() => searchTerm.trim() !== "" && setShowModal(true)}
-            >
-              <i className="bi bi-search"></i>
-            </button>
-          </div>
-        </div>
+        <i className="bi bi-search"></i>
+      </button>
+    </div>
 
-        <div className="col-md-3">
-          <select
-            className="form-select"
-            value={sortDirection}
-            onChange={(e) => {
-              setSortByField("product_cost");
-              setSortDirection(e.target.value);
-  
+    {/* Search Suggestion Cards */}
+    {searchTerm.trim() !== "" && filteredProducts.length > 0 && (
+      <div
+        className="search-suggestions bg-white text-dark rounded shadow"
+        style={{
+          position: "absolute",
+          top: "100%",
+          left: 0,
+          width: "100%",
+          maxHeight: "300px",
+          overflowY: "auto",
+          zIndex: 1000,
+        }}
+      >
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            className="p-2 border-bottom d-flex align-items-center"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              navigate("/mpesapayment", { state: { product } });
+              setSearchTerm(""); // Reset search after navigation
             }}
           >
-            <option value="">Price</option>
-            <option value="desc">Highest Price</option>
-            <option value="asc">Lowest Price</option>
-          </select>
-        </div>
+            <img
+              src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
+              alt={product.product_name}
+              style={{
+                width: "50px",
+                height: "50px",
+                objectFit: "contain",
+                marginRight: "10px",
+              }}
+            />
+            <div>
+              <strong>{product.product_name}</strong>
+              <p className="mb-0 small">{product.product_description}</p>
+            </div>
+          </div>
+        ))}
       </div>
+    )}
+  </div>
+
+  <div className="col-md-3">
+    <select
+      className="form-select"
+      value={sortDirection}
+      onChange={(e) => {
+        setSortByField("product_cost");
+        setSortDirection(e.target.value);
+      }}
+    >
+      <option value="">Price</option>
+      <option value="desc">Highest Price</option>
+      <option value="asc">Lowest Price</option>
+    </select>
+  </div>
+</div>
 
       {/* Modals */}
       {deleteProduct && (
@@ -166,53 +211,57 @@ const Getproducts = () => {
       )}
 
       {/* Main Section */}
-      <div className="bg-dark position-relative">
-        
-          {/* Sidebar */}
-      
-            <CategoryCarousel
-              hoveredCategory={hoveredCategory}
-              products={products}
-              setHoveredCategory={setHoveredCategory}
-              categories={categories}
-            />
-        
-        <div className="row">
-          {/* Hot Categories */}
-          <div className="col-md-12">
-          {showCategories && (
-            <Hotcategory
-              hotCategory={hotCategory}
-              products={products}
-              categories={categories}
-              hoveredCategory={hoveredCategory}
-              setHotCategory={setHotCategory}
-              setHoveredCategory={setHoveredCategory}
-              navigate={navigate}
-              setSelectedProduct={setSelectedProduct}
-              setDeleteProduct={setDeleteProduct}
-            />
+     <div className="bg-dark position-relative">
+
+  {/*category side bar and carousel */}
+  <CategoryCarousel
+    hoveredCategory={hoveredCategory}
+    products={products}
+    setHoveredCategory={setHoveredCategory}
+    categories={categories}
+    showCategories={showCategories}
+  />
+
+  {/*  hotcategory + productslist */}
+  <div className="row">
+    <div className="col-md-12">
+
+      {showCategories && (
+        <Hotcategory
+          hotCategory={hotCategory}
+          products={products}
+          categories={categories}
+          hoveredCategory={hoveredCategory}
+          setHotCategory={setHotCategory}
+          setHoveredCategory={setHoveredCategory}
+          navigate={navigate}
+          setSelectedProduct={setSelectedProduct}
+          setDeleteProduct={setDeleteProduct}
+        />
       )}
 
-            {/* Product Grid */}
-            <ProductCard
-              visible={visible}
-              setVisible={setVisible}
-              sortedProducts={sortedProducts}
-              categoryProducts={categoryProducts}
-              hoveredCategory={hoveredCategory}
-              setSelectedProduct={setSelectedProduct}
-              setDeleteProduct={setDeleteProduct}
-              navigate={navigate}
-              loading={loading}
-            />
-          </div>
-        </div>
-      </div>
+      <ProductCard
+        visible={visible}
+        setVisible={setVisible}
+        sortedProducts={sortedProducts}
+        categoryProducts={categoryProducts}
+        hoveredCategory={hoveredCategory}
+        setSelectedProduct={setSelectedProduct}
+        setDeleteProduct={setDeleteProduct}
+        navigate={navigate}
+        loading={loading}
+      />
+
+    </div>
+  </div>
+
+</div>
+
       </div>
   )
 };
 
 export default Getproducts;
+
 
 
