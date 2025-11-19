@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useMemo } from "react";
 import axios from "axios";
 import Updateproducts from "./Updateproducts";
 import Deleteproducts from "./Deleteproducts";
@@ -54,26 +54,34 @@ const Getproducts = () => {
   }, []);
 
   // Filter products by search term
-  const filteredProducts = products.filter((product) =>
+ const filteredProducts = useMemo(() => {
+  return products.filter((product) =>
     product.product_name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+}, [products, searchTerm]);
+
+
 
   // Unique categories
   const categories = [...new Set(products.map((p) => p.product_category))];
 
   // Products to display (category hover OR search)
-  const categoryProducts = hoveredCategory
+ const categoryProducts = useMemo(() => {
+  return hoveredCategory
     ? products.filter((p) => p.product_category === hoveredCategory)
     : filteredProducts;
-
+}, [hoveredCategory, filteredProducts]);
+  
   // Sorted products
-  const sortedProducts = [...categoryProducts].sort((a, b) => {
-    if (!sortDirection || !sortByField) return 0;
-    return sortDirection === "asc"
+  const sortedProducts = useMemo(() => {
+  if (!sortDirection || !sortByField) return categoryProducts;
+  return [...categoryProducts].sort((a, b) =>
+    sortDirection === "asc"
       ? a[sortByField] - b[sortByField]
-      : b[sortByField] - a[sortByField];
-  });
-
+      : b[sortByField] - a[sortByField]
+  );
+}, [categoryProducts, sortDirection, sortByField]);
+  
   return (
     <div className="container-fluid text-white">
       {/* Header */}
@@ -118,7 +126,7 @@ const Getproducts = () => {
             onChange={(e) => {
               setSortByField("product_cost");
               setSortDirection(e.target.value);
-              setVisible(9);
+  
             }}
           >
             <option value="">Price</option>
@@ -191,3 +199,4 @@ const Getproducts = () => {
 };
 
 export default Getproducts;
+
