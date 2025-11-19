@@ -121,8 +121,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
                       <div className="card bg-secondary text-white h-100">
                         <img
                           src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
-                          className="card-img-top"
-                          style={{ height: "150px", objectFit: "cover" }}
+                          className="card-img-top productimage"
                           alt={product.product_name}
                         />
                         <div className="card-body">
