@@ -19,9 +19,7 @@ const Getproducts = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [deleteProduct, setDeleteProduct] = useState(null);
 
-  //hides categories and hotcategories
-  const [showCategories, setShowCategories] = useState(true);
-
+  
 
   // Search state
   const [searchTerm, setSearchTerm] = useState("");
@@ -94,15 +92,6 @@ const Getproducts = () => {
     setVisible(6)
   }
 }, [searchTerm]);
-
-
-  useEffect(() => {
-  const timer = setTimeout(() => {
-    setShowCategories(false);
-  }, 5000); // 5 seconds
-
-  return () => clearTimeout(timer);
-}, []);
 
   
   return (
@@ -219,14 +208,14 @@ const Getproducts = () => {
     products={products}
     setHoveredCategory={setHoveredCategory}
     categories={categories}
-    showCategories={showCategories}
+   
   />
 
   {/*  hotcategory + productslist */}
   <div className="row">
     <div className="col-md-12">
 
-      {showCategories && (
+    
         <Hotcategory
           hotCategory={hotCategory}
           products={products}
@@ -238,7 +227,7 @@ const Getproducts = () => {
           setSelectedProduct={setSelectedProduct}
           setDeleteProduct={setDeleteProduct}
         />
-      )}
+  
 
       <ProductCard
         visible={visible}
