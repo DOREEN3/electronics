@@ -119,11 +119,13 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
                   .map((product) => (
                     <div key={product.id} className="col-md-4 mb-3">
                       <div className="card bg-secondary text-white h-100">
+                        <div className="product-img-wrapper">
                         <img
                           src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
-                          className="card-img-top productimage"
+                          className="productimage"
                           alt={product.product_name}
                         />
+                          </div>
                         <div className="card-body">
                           <h6 className="card-title">{product.product_name}</h6>
                           <p className="card-text small">
