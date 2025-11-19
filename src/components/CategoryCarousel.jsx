@@ -21,6 +21,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
                   }`}
                   style={{ cursor: "pointer" }}
                   onMouseEnter={() => setHoveredCategory(cat)}
+                  
                   onMouseLeave={() => setHoveredCategory(null)}
                 >
                   {cat}
