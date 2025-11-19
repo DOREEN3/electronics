@@ -55,12 +55,14 @@ const Hotcategory = ({
                     className="col-md-4 d-flex align-items-stretch justify-content-center mb-4"
                   >
                     <div className="card shadow h-100 w-100">
+                      <div className="product-img-wrapper">
                       <img
                         src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
                         alt={product.product_name}
-                        className="card-img-top productimage"
+                        className=" productimage"
                        
                       />
+                        </div>
 
                       <div className="card-body">
                         <h5 className="card-title fw-bold">{product.product_name}</h5>
