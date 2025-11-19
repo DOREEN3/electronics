@@ -36,7 +36,7 @@ const ProductCard = ({
                       alt={product.product_name}
                       className="card-img-top"
                       style={{
-                        height: "200px",
+                        height: "150px",
                         objectFit: "cover",
                         width: "100%",
                         backgroundColor: "#f8f8f8"
