@@ -58,8 +58,8 @@ const Hotcategory = ({
                       <img
                         src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
                         alt={product.product_name}
-                        className="card-img-top"
-                        style={{ height: "180px", objectFit: "cover" }}
+                        className="card-img-top productimage"
+                       
                       />
 
                       <div className="card-body">
