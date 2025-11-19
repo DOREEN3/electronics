@@ -13,13 +13,12 @@ const ProductCard = ({
 }) => {
   return (
     <div>
-      {/* Product List */}
       {!hoveredCategory && (
         <div
-          className="product-container bg-white bg-opacity-75 rounded shadow-lg"
+          className="product-container bg-white bg-opacity-75 rounded"
           style={{
-            backdropFilter: "blur(8px)",
             border: "1px solid rgba(255,255,255,0.2)",
+            padding: "10px"
           }}
         >
           <div className="row g-4 m-2">
@@ -27,45 +26,56 @@ const ProductCard = ({
               sortedProducts.slice(0, visible).map((product) => (
                 <div
                   key={product.id}
-                  className="col-md-4 d-flex align-items-stretch justify-content-center mb-4"
+                  className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch mb-4"
                 >
-                  <div className="card shadow h-80 w-100">
+                  <div className="card shadow-sm w-100" style={{ minHeight: "100%" }}>
+                    
+                    {/* FIXED Image Height */}
                     <img
                       src={`https://doreen98.pythonanywhere.com${product.product_photo}`}
                       alt={product.product_name}
-                      className="card-img-top productimage"
+                      className="card-img-top"
+                      style={{
+                        height: "200px",
+                        objectFit: "cover",
+                        width: "100%",
+                        backgroundColor: "#f8f8f8"
+                      }}
                     />
 
                     <div className="card-body">
-                      <h5 className="card-title fw-bold fs-4">
+                      <h5 className="card-title fw-bold fs-5">
                         {product.product_name}
                       </h5>
-                      <p className="card-text">
+
+                      <p className="card-text" style={{ minHeight: "60px" }}>
                         <span className="text-success fw-bold">Description: </span>
                         {product.product_description}
                       </p>
-                      <h5>
+
+                      <h6>
                         <span className="text-warning fw-bold">Category: </span>
                         {product.product_category}
-                      </h5>
-                      <h3>
+                      </h6>
+
+                      <h4 className="mt-2">
                         <span className="text-danger fw-bold">Price: </span>
                         KSH {product.product_cost}
-                      </h3>
+                      </h4>
                     </div>
 
-                    <div className="card-footer">
+                    <div className="card-footer bg-white border-0">
                       <button
                         onClick={() =>
                           navigate("/mpesapayment", { state: { product } })
                         }
-                        className="btn btn-dark w-100 mt-2"
+                        className="btn btn-dark w-100 mb-2"
                       >
                         Purchase Now
                       </button>
 
                       <button
-                        className="btn btn-warning w-100 mt-2"
+                        className="btn btn-warning w-100 mb-2"
                         onClick={() => {
                           setSelectedProduct(product);
                           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -75,7 +85,7 @@ const ProductCard = ({
                       </button>
 
                       <button
-                        className="btn btn-danger w-100 mt-2"
+                        className="btn btn-danger w-100"
                         onClick={() => {
                           setDeleteProduct(product);
                           window.scrollTo({ top: 0, behavior: "smooth" });
