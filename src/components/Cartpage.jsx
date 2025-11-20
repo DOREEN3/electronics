@@ -19,10 +19,10 @@ const CartPage = () => {
   }
 
   return (
-    <div className="container mt-5 mb-5">
+    <div className="container mt-4 mb-5">
       <h2 className="mb-4 text-center text-primary">My Cart</h2>
 
-      <div className="card shadow-sm p-4">
+      <div className="card shadow-sm p-3 p-md-4">
         {cart.map((item) => {
           const price = Number(item.product_cost);
           const subTotal = price * item.quantity;
@@ -30,29 +30,36 @@ const CartPage = () => {
           return (
             <div
               key={item.id}
-              className="d-flex justify-content-between align-items-center mb-3 p-3 border rounded"
+              className="
+                d-flex flex-column flex-md-row 
+                justify-content-between align-items-md-center
+                mb-3 p-3 border rounded
+              "
             >
-              <div className="d-flex align-items-center">
+              {/* LEFT SIDE: IMAGE + NAME */}
+              <div className="d-flex align-items-center mb-3 mb-md-0">
                 <img
                   src={`https://doreen98.pythonanywhere.com${item.product_photo}`}
                   alt={item.product_name}
+                  className="me-3"
                   style={{
-                    width: "80px",
-                    height: "80px",
+                    width: "70px",
+                    height: "70px",
                     objectFit: "cover",
                     borderRadius: "8px",
-                    marginRight: "15px",
                   }}
                 />
-
                 <div>
-                  <h5 className="mb-1">{item.product_name}</h5>
-                  <p className="mb-0 text-muted">KSH {price.toLocaleString()}</p>
+                  <h6 className="mb-1">{item.product_name}</h6>
+                  <p className="mb-0 text-muted">
+                    KSH {price.toLocaleString()}
+                  </p>
                 </div>
               </div>
 
-              <div className="d-flex align-items-center">
-                <div className="d-flex align-items-center me-3">
+              {/* RIGHT SIDE: QUANTITY + SUBTOTAL + REMOVE */}
+              <div className="d-flex flex-column flex-md-row align-items-md-center">
+                <div className="d-flex align-items-center mb-2 mb-md-0 me-md-3">
                   <button
                     className="btn btn-outline-secondary btn-sm"
                     disabled={item.quantity <= 1}
@@ -61,7 +68,7 @@ const CartPage = () => {
                     -
                   </button>
 
-                  <span className="mx-2">{item.quantity}</span>
+                  <span className="mx-3">{item.quantity}</span>
 
                   <button
                     className="btn btn-outline-secondary btn-sm"
@@ -71,9 +78,9 @@ const CartPage = () => {
                   </button>
                 </div>
 
-                <h5 className="me-3">
+                <h6 className="text-center text-md-start me-md-3 mb-2 mb-md-0">
                   KSH {subTotal.toLocaleString()}
-                </h5>
+                </h6>
 
                 <button
                   className="btn btn-danger btn-sm"
@@ -88,11 +95,16 @@ const CartPage = () => {
 
         <hr />
 
-        <div className="d-flex justify-content-between align-items-center mt-4">
-          <h4>Total: KSH {total.toLocaleString()}</h4>
+        <div className="
+          d-flex flex-column flex-md-row
+          justify-content-between align-items-md-center mt-4
+        ">
+          <h4 className="text-center text-md-start mb-3 mb-md-0">
+            Total: KSH {total.toLocaleString()}
+          </h4>
 
-          <div>
-            <button className="btn btn-warning me-2" onClick={clearCart}>
+          <div className="text-center text-md-end">
+            <button className="btn btn-warning me-2 mb-2 mb-md-0" onClick={clearCart}>
               Clear Cart
             </button>
 
