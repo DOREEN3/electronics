@@ -62,10 +62,10 @@ const ProductCard = ({
 
                     <div className="card-footer bg-white border-0">
                       <button
-                        onClick={() =>{
-                          navigate("/mpesapayment", { state: { product } });
-                         window.scrollTo({ top: 0, behavior: "smooth" });
-                        }}
+                        onClick={() =>
+                          navigate("/mpesapayment", { state: { product } })
+                       
+                        }
                         className="btn btn-dark w-100 mb-2"
                       >
                         Purchase Now
