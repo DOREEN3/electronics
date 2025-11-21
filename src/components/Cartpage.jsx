@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "./Cartcontext";
+import {Link} from "react-router-dom"
 
 const CartPage = () => {
   const { cart, removeFromCart, clearCart, updateQuantity } = useCart();
@@ -108,9 +109,9 @@ const CartPage = () => {
               Clear Cart
             </button>
 
-            <button className="btn btn-success">
+           <Link to="/mpesapayment"><button className="btn btn-success">
               Proceed to Checkout
-            </button>
+            </button></Link> 
           </div>
         </div>
       </div>
@@ -119,3 +120,4 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
