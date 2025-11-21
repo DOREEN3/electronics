@@ -103,7 +103,7 @@ const Mpesapayment = () => {
           <input
             type="tel"
             placeholder="Enter phone 254xxxxxxxxx"
-            className="form-control fs-5"
+            className="form-control fs-6"
             onChange={(e) => setPhone(e.target.value)}
             required
           />
@@ -111,7 +111,7 @@ const Mpesapayment = () => {
 
           <input
             type="number"
-            className="form-control fs-5"
+            className="form-control fs-6"
             value={amountToPay}
             disabled
           />
@@ -142,3 +142,4 @@ const Mpesapayment = () => {
 };
 
 export default Mpesapayment;
+
