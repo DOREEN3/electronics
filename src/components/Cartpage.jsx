@@ -109,9 +109,9 @@ const CartPage = () => {
               Clear Cart
             </button>
 
-           <Link to="/mpesapayment"><button className="btn btn-success">
+           <Link to="/mpesapayment" className="btn btn-success">
               Proceed to Checkout
-            </button></Link> 
+            </Link> 
           </div>
         </div>
       </div>
@@ -120,4 +120,5 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
 
