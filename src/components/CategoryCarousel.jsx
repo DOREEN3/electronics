@@ -63,7 +63,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <img
-                  src="assets/electronic3.jpeg"
+                  src="assets/electronic3.webp"
                   className="d-block w-100"
                   style={{ height: "500px" }}
                   alt="electronics"
@@ -71,7 +71,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
               </div>
               <div className="carousel-item">
                 <img
-                  src="assets/kitchen.jpeg"
+                  src="assets/kitchen.png"
                   className="d-block w-100"
                   style={{ height: "500px" }}
                   alt="kitchen"
@@ -79,7 +79,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
               </div>
               <div className="carousel-item">
                 <img
-                  src="assets/television.jpeg"
+                  src="assets/television.jpg"
                   className="d-block w-100"
                   style={{ height: "500px" }}
                   alt="television"
@@ -93,7 +93,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
               data-bs-target="#carouselExampleIndicators"
               data-bs-slide="prev"
             >
-              <span className="carousel-control-prev-icon"></span>
+              <span className="carousel-control-prev-icon bg-danger"></span>
               <span className="visually-hidden">Previous</span>
             </button>
 
@@ -103,7 +103,7 @@ const CategoryCarousel = ({ hoveredCategory, products, setHoveredCategory, categ
               data-bs-target="#carouselExampleIndicators"
               data-bs-slide="next"
             >
-              <span className="carousel-control-next-icon"></span>
+              <span className="carousel-control-next-icon bg-danger"></span>
               <span className="visually-hidden">Next</span>
             </button>
           </div>
