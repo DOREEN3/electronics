@@ -93,6 +93,12 @@ const Getproducts = () => {
   }
 }, [searchTerm]);
 
+const handleReset=()=>{
+  setHotCategory("")
+  setSearchTerm("")
+  setSortDirection("asc")
+}
+
   
   return (
     <div className="container-fluid text-white">
@@ -104,8 +110,8 @@ const Getproducts = () => {
       </div>
 
       {/* Search & Sort */}
-     <div className="row g-3 justify-content-center mb-5" style={{ width: "90%" }}>
-  <div className="col-md-6 position-relative">
+     <div className="row g-3 justify-content-center mb-5 ms-4 " style={{ width: "90%" }}>
+  <div className="col-md-8 position-relative">
     <div className="input-group">
       <input
         type="text"
@@ -167,7 +173,7 @@ const Getproducts = () => {
     )}
   </div>
 
-  <div className="col-md-3">
+  <div className="col-md-2">
     <select
       className="form-select"
       value={sortDirection}
@@ -180,6 +186,9 @@ const Getproducts = () => {
       <option value="desc">Highest Price</option>
       <option value="asc">Lowest Price</option>
     </select>
+  </div>
+  <div className="col-md-2">
+    <button onClick={handleReset}className="btn btn-dark w-100">Reset</button>
   </div>
 </div>
 
@@ -201,19 +210,19 @@ const Getproducts = () => {
 
       {/* Main Section */}
      <div className="container-fluid bg-dark position-relative">
-<div className="row">
-  {/*category side bar and carousel */}
-  <CategoryCarousel
-    hoveredCategory={hoveredCategory}
-    products={products}
-    setHoveredCategory={setHoveredCategory}
-    categories={categories}
-   
-  />
-</div>
-  {/*  hotcategory + productslist */}
-  <div className="row">
-    <div className="col-md-12">
+      <div className="row">
+        {/*category side bar and carousel */}
+        <CategoryCarousel
+          hoveredCategory={hoveredCategory}
+          products={products}
+          setHoveredCategory={setHoveredCategory}
+          categories={categories}
+        
+        />
+      </div>
+        {/*  hotcategory + productslist */}
+        <div className="row">
+          <div className="col-md-12">
 
     
         <Hotcategory
@@ -227,7 +236,21 @@ const Getproducts = () => {
           setSelectedProduct={setSelectedProduct}
           setDeleteProduct={setDeleteProduct}
         />
-  
+     <div className="row">
+        <div className="col-md-12">
+          <div className="card bg-danger m-2 shadow-lg text-center">
+            <div className="scroll-text">
+              <p>
+                For inquiries or to place your order contact us on 
+                <i className="bi bi-telephone-fill text-black ms-2 fs-3 me-2"></i> <span className="me-2 ">0796651091 or </span>
+                <i className="bi bi-envelope-fill text-black fs-3 me-2"></i> 
+                <span className="me-2">electromart@gmail.com</span>
+              </p>
+            </div>
+          </div>
+        </div>
+    </div>
+
 
       <ProductCard
         visible={visible}
@@ -251,6 +274,7 @@ const Getproducts = () => {
 };
 
 export default Getproducts;
+
 
 
 
