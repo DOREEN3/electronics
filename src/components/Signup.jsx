@@ -10,16 +10,82 @@ const Signup = () => {
         password:"",
         phone :""
     })
+    const [existingEmail,setExistingEmail]=useState("")
+    const [existingUsername,setExistingUsername]=useState("")
+    // state to validate the input 
+    const [errors,setErrors]=useState({})
+
+   
 
     // declare 3 states for posting data 
     const[success,setSuccess]=useState("")
     const[error,setError]=useState("")
     const [loading,setLoading]=useState("")
 
+   
+    
+      
+     // input validation
+     const validateEmail=(email)=>{
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+     }
+
+    const validateUsername=(username)=>{
+        return /^[A-Za-z][A-Za-z0-9_]{2,19}$/.test(username)
+    }
+    const validatePassword=(password)=>{
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(password)
+    }
+    const validatePhone=(phone)=>{
+        return /^(?:\+254|0)(7\d{8}|1\d{8})$/.test(phone)
+    }
+
+    // check if the input meet the validation criteria 
+    const validateField=(name,value)=>{
+        switch(name){
+            case "username":
+                return validateUsername(value)
+                ? ""
+                : "Username must be 3-20 characters,letters,numbers,underscore only."
+
+            case "email":
+                return validateEmail(value)
+                ? ""
+                : "Enter a valid email address"
+
+            case "phone" :
+                return validatePhone(value)
+                ? ""
+                : "Phone must be Kenyan format (0712345678 or +254712345678)."
+
+            case "password" :
+                return validatePassword(value)
+                ? ""
+                : "Password must contain uppercase, lowercase, number, special character, 8+ chars."
+
+            default:
+                return "";
+        }
+           
+    }
+
+    // check if the form is valid 
+    const isFormValid=
+    Object.values(errors).every((e) => e === "") &&
+    Object.values(formData).every((v) => v !== "");
+
     const handleChange=(e)=>{
         const {name,value}=e.target
-        setFormData({...formData , [name]:value})
-    }
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+          }));
+      
+          setErrors((prev) => ({
+            ...prev,
+            [name]: validateField(name, value),
+          }));
+        };
 
     const handleSubmit= async (e)=>{
         e.preventDefault()
@@ -41,6 +107,17 @@ const Signup = () => {
             setLoading("")
         } catch (error) {
             setError(error.response?.data?.error || error.message)
+
+            // check if username and email exist
+           
+             if (error.includes("Email")) {
+                setExistingEmail(formData.email);
+            }
+            if (error.includes("Username")) {
+                setExistingUsername(formData.username);
+            }
+    
+
 
             // reset 
             setLoading("")
@@ -67,8 +144,9 @@ const Signup = () => {
                  required
                  value={formData.username}
                   className="rounded px-2 w-100 py-2 "  
-                  onChange={handleChange}
-                  /><br /> <br />
+                  onChange={handleChange}/>
+                  {existingUsername && <p className='text-danger'>Username is already taken</p>}
+                  {errors.username && <p className="text-danger">{errors.username}</p>}<br /> <br />
             <label htmlFor="email">Email :
              
             </label> <br />
@@ -78,7 +156,9 @@ const Signup = () => {
                 value={formData.email}
                  placeholder='Enter your email'
                   className="rounded px-2 w-100 py-2 "
-                  onChange={handleChange}  /> <br /> <br />
+                  onChange={handleChange}  />
+                  {existingEmail && <p className='text-danger'>Email already exist</p>}
+                  {errors.email && <p className='text-danger'>{errors.email}</p>} <br /> <br />
             <label htmlFor="password"> Password : 
               
             </label>  <br />
@@ -88,7 +168,8 @@ const Signup = () => {
                 value={formData.password}
                  placeholder='Enter password...'
                   className="rounded px-2 w-100 py-2 " 
-                  onChange={handleChange} /><br /> <br />
+                  onChange={handleChange} />
+                  {errors.password && <p className='text-danger'>{errors.password}</p>}<br /> <br />
             <label htmlFor="phone">Phone :
                
             </label> <br /> 
@@ -98,8 +179,9 @@ const Signup = () => {
                 value={formData.phone}
                  placeholder='Enter phone number...'
                   className="rounded px-2 w-100 py-2 " 
-                  onChange={handleChange} /><br /> <br />
-            <button  type='submit' className='btn btn-primary rounded  w-100 py-2'>Submit</button> <br />
+                  onChange={handleChange} />
+                  {errors.phone && <p className='text-danger'>{errors.phone}</p>}<br /> <br />
+            <button  type='submit' className='btn btn-primary rounded  w-100 py-2' disabled={isFormValid}>Submit</button> <br />
             <p  className='mt-2 mx-4 fs-5 fw-bold'>Have an account ? <Link to="/signin">Sign In</Link></p>
             
             </fieldset>
