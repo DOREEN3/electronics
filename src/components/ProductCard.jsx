@@ -1,4 +1,5 @@
 import React from "react";
+import Chatbot from "./Chatbot";
 
 const ProductCard = ({
   hoveredCategory,
@@ -26,7 +27,7 @@ const ProductCard = ({
               sortedProducts.slice(0, visible).map((product) => (
                 <div
                   key={product.id}
-                  className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch mb-4"
+                  className="col-12 col-sm-6 col-md-4 d-flex mb-4"
                 >
                   <div className="card shadow-sm w-100" style={{ minHeight: "100%" }}>
                     
@@ -115,6 +116,18 @@ const ProductCard = ({
           </button>
         </div>
       )}
+      <Chatbot
+      botName="ElectroMart Bot"
+      greetingMessage="Hi! I’m here to help you with orders and shipping."
+      placeholder="Type your question..."
+      botResponses={{
+      hello: "Hello! How can I help you today?",
+      delivery: "We deliver across the country! Call 0796651091 to place an order.",
+      shipping: "Shipping fees are as low as Ksh.100. Free delivery around Nairobi.",
+      bye: "Goodbye! Have a great day!",
+  }}
+/>
+
     </div>
   );
 };
