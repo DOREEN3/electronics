@@ -35,7 +35,7 @@ const Navbar = () => {
             {/* Cart Icon */}
             <li className="navbar-item position-relative">
               <Link to="/cart" className="nav-link">
-                <i className="bi bi-cart-fill" style={{ fontSize: "1.5rem", color: "yellow" }}></i>
+                <i className="bi bi-cart-fill" style={{ fontSize: "1.5rem", color: "black" }}></i>
                 {cartCount > 0 && (
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {cartCount}
